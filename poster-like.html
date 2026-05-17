@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster with Like Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .poster-container {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .poster-container:hover {
+            transform: scale(1.02);
+        }
+
+        .poster-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .poster-title {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .like-animation {
+            position: absolute;
+            pointer-events: none;
+            font-size: 60px;
+            animation: likePopup 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes likePopup {
+            0% {
+                opacity: 1;
+                transform: scale(0) translate(-50%, -50%);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1) translate(-50%, -50%);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5) translate(-50%, -50%);
+            }
+        }
+
+        .like-count {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #f5576c;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 45px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-text {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container" id="poster">
+        <div class="poster-image">
+            <span>🎬</span>
+        </div>
+        <div class="like-count" id="likeCount">0</div>
+        <div class="poster-title">Amazing Poster</div>
+        <div class="info-text">Double Click to Like ❤️</div>
+    </div>
+
+    <script>
+        const poster = document.getElementById('poster');
+        const likeCount = document.getElementById('likeCount');
+        let likeCounter = 0;
+        let lastClickTime = 0;
+
+        poster.addEventListener('dblclick', function(e) {
+            // Prevent the default double-click behavior
+            e.preventDefault();
+            
+            // Increment like counter
+            likeCounter++;
+            likeCount.textContent = likeCounter;
+
+            // Create multiple hearts for a richer animation
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    createLikeAnimation(e.clientX, e.clientY);
+                }, i * 50);
+            }
+
+            // Add a subtle pulse effect to the like count
+            likeCount.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                likeCount.style.transform = 'scale(1)';
+            }, 200);
+        });
+
+        function createLikeAnimation(x, y) {
+            const like = document.createElement('div');
+            like.className = 'like-animation';
+            like.textContent = '❤️';
+
+            // Random offset for multiple hearts
+            const randomX = (Math.random() - 0.5) * 100;
+            const randomY = (Math.random() - 0.5) * 100;
+
+            like.style.left = x + randomX + 'px';
+            like.style.top = y + randomY + 'px';
+
+            document.body.appendChild(like);
+
+            // Remove the element after animation completes
+            setTimeout(() => {
+                like.remove();
+            }, 600);
+        }
+
+        // Transition effect for like count
+        likeCount.style.transition = 'transform 0.2s ease';
+    </script>
+</body>
+</html>
