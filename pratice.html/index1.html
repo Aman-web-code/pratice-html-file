@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images and media</title>
+</head>
+
+<body>
+    <img src="apple.jpg" alt="description" width="200" height="200">
+
+    <!---responsive image--->
+    <img src="apple.jpg" alt="description" style="max-width:100%;height:auto;">
+
+    <!--image with different sources-->
+    <picture>
+        <source media="(min-width:800px)" srcset="apple-large.jpg">
+        <source media="(min-width:500px)" srcset="apple-medium.jpg">
+        <img src="apple.jpg" alt="description" >
+    </picture>
+
+    <!--Audio and video-->
+    <audio controls>
+        <source src="audio.mp3" type="audio/mpeg">
+        <source src="audio.ogg" type="audio/ogg">
+    </audio>
+
+    <!--video-->
+    <video controls width="400">
+        <source src="video.mp4" type="video/mp4">
+        <source src="video.webm" type="video/webm">
+
+    </video>
+
+</body>
+
+</html>
